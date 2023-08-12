@@ -4,19 +4,22 @@
 <hibernate-configuration>
     <session-factory>
         <property name="connection.driver_class">com.mysql.cj.jdbc.Driver</property>
-        <property name="connection.url">jdbc:mysql://localhost:3306/hql_kfcpoop</property>
+        <property name="connection.url">jdbc:mysql://localhost:3306/exam_hibernate</property>
         <property name="connection.username">root</property>
         <property name="connection.password"></property>
         <property name="connection.pool_size">10</property>
-        <property name="dialect">org.hibernate.dialect.MySQL5InnoDBDialect</property>
+        <property name="dialect">org.hibernate.dialect.MySQL8Dialect</property>
         <property name="show_sql">true</property>
         <property name="format_sql">true</property>
         <property name="current_session_context_class">thread</property>
         <property name="hbm2ddl.auto">update</property>
 
-<!--        <mapping class="com.hibernate.model.Commande"></mapping>-->
-<!--        <mapping class="com.hibernate.model.Utilisateur"></mapping>-->
-<!--        <mapping class="com.hibernate.model.Produit"></mapping>-->
-<!--        <mapping class="com.hibernate.model.Categorie"></mapping>-->
+        <mapping class="hb.exam.model.Utilisateur"></mapping>
+        <mapping class="hb.exam.model.Commande"></mapping>
+        <mapping class="hb.exam.model.Produit"></mapping>
+        <mapping class="hb.exam.model.Categorie"></mapping>
+        <mapping class="hb.exam.model.DetailsCommande"></mapping>
+        <mapping class="hb.exam.model.Commentaire"></mapping>
+
     </session-factory>
 </hibernate-configuration>
