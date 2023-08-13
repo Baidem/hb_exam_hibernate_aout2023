@@ -80,4 +80,23 @@ public class Produit {
     public void setCommentaires(List<Commentaire> commentaires) {
         this.commentaires = commentaires;
     }
+
+    public String getNom() {
+        return nom;
+    }
+
+    public double getPrix() {
+        return prix;
+    }
+
+    @Override
+    public String toString() {
+        return "Produit{" +
+                "id = " + id +
+                ", nom = '" + nom + '\'' +
+                ", description = '" + description + '\'' +
+                ", prix = " + prix +
+                ", categorie = " + categorie +
+                '}';
+    }
 }

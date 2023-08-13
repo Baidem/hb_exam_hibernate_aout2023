@@ -16,7 +16,7 @@ public class Commentaire {
     @Type(type = "text")
     private String commentaire;
 
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = true)
     @JoinColumn(name = "utilisateur_id", referencedColumnName = "id")
     private Utilisateur utilisateur;
     public Utilisateur getUtilisateur(){

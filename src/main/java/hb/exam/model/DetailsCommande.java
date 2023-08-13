@@ -37,4 +37,22 @@ public class DetailsCommande {
     public void setQuantite(int quantite) {
         this.quantite = quantite;
     }
+
+    public long getId() {
+        return id;
+    }
+
+    public int getQuantite() {
+        return quantite;
+    }
+
+    @Override
+    public String toString() {
+        return "DetailsCommande{" +
+                "id = " + id +
+                ", quantite = " + quantite +
+                ", produit = " + produit.getNom() +
+                ", commande id = " + commande.getId() +
+                '}';
+    }
 }

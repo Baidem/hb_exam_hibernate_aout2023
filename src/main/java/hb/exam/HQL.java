@@ -1,5 +1,7 @@
 package hb.exam;
 
+import hb.exam.model.Commande;
+import hb.exam.model.DetailsCommande;
 import hb.exam.model.Utilisateur;
 import hb.exam.utils.HibernateUtil;
 import org.hibernate.Session;
@@ -73,112 +75,68 @@ public class HQL {
         // Requête : supprimer les utilisateurs n’ayant pas réalisé de commandes depuis plus de 2 ans.
         GregorianCalendar gc = new GregorianCalendar();
         gc.add(Calendar.YEAR, -2);
-        List<Utilisateur> req5 = session.createQuery(
-                "SELECT u FROM Utilisateur u " +
+        List<Utilisateur> utilisateursASupprimer = session.createQuery(
+                "FROM Utilisateur u " +
                         "WHERE NOT EXISTS " +
                         "(SELECT c FROM Commande c " +
                         "WHERE c.utilisateur = u " +
-                        "AND c.dateCommande > :plus2Ans)"
-        ).setParameter("plus2Ans", gc).getResultList();
+                        "AND c.dateCommande > :dateNowMoins2Ans)"
+        ).setParameter("dateNowMoins2Ans", gc).getResultList();
         System.out.println("------------------------------------");
-        System.out.println("Utilisateurs n’ayant pas réalisé de commandes depuis plus de 2 ans");
-        for (Utilisateur o: req5){
-            System.out.println(o);
+        System.out.println("Liste d'utilisateurs à supprimer " + utilisateursASupprimer.size());
+        for (Utilisateur u: utilisateursASupprimer){
+            System.out.println(u);
+        }
+        System.out.println("------------------------------------");
+
+        List<Commande> commandesASupprimer = session.createQuery(
+                "FROM Commande c WHERE c.utilisateur IN :utilisateurs"
+        ).setParameterList("utilisateurs", utilisateursASupprimer).getResultList();
+        System.out.println("------------------------------------");
+        System.out.println("Liste des commandes à supprimer " + commandesASupprimer.size());
+        for (Commande c: commandesASupprimer){
+            System.out.println(c);
+        }
+        System.out.println("------------------------------------");
+
+        List<DetailsCommande> detailsCommandesASupprimer = session.createQuery(
+                "FROM DetailsCommande d WHERE d.commande IN :commandes"
+        ).setParameterList("commandes", commandesASupprimer).getResultList();
+        System.out.println("------------------------------------");
+        System.out.println("Liste des détails commandes à supprimer " + detailsCommandesASupprimer.size());
+        for (DetailsCommande d : detailsCommandesASupprimer){
+            System.out.println(d);
+        }
+        System.out.println("------------------------------------");
+
+        if (!detailsCommandesASupprimer.isEmpty()) {
+            int deletedCount = session.createQuery("DELETE FROM DetailsCommande d WHERE d IN :details")
+                    .setParameterList("details", detailsCommandesASupprimer)
+                    .executeUpdate();
+            System.out.println("------------------------------------");
+            System.out.println("Nombre de détails commandes supprimés : " + deletedCount);
+            System.out.println("------------------------------------");
         }
 
-//        session.createQuery(
-//                "DELETE FROM DetailsCommande d WHERE EXISTS " +
-//                        "(SELECT u FROM Utilisateur u WHERE NOT EXISTS " +
-//                        "(SELECT c FROM Commande c WHERE c.utilisateur = u AND c.dateCommande > :plus2Ans))"
-//        ).setParameter("plus2Ans", gc).executeUpdate();
+        if (!commandesASupprimer.isEmpty()) {
+            int deletedCount = session.createQuery("DELETE FROM Commande c WHERE c IN :commandes")
+                    .setParameterList("commandes", commandesASupprimer)
+                    .executeUpdate();
+            System.out.println("------------------------------------");
+            System.out.println("Nombre de commandes supprimés : " + deletedCount);
+            System.out.println("------------------------------------");
+        }
 
-        session.createQuery(
-                "DELETE FROM Utilisateur u WHERE NOT EXISTS (SELECT c FROM Commande c WHERE c.utilisateur = u AND c.dateCommande > :plus2Ans)"
-        ).setParameter("plus2Ans", gc).executeUpdate();
-        System.out.println("------------------------------------");
-
-
-
-//        // Requête 1 !!
-//        Long nbUtilisateur =
-//                session.createQuery("SELECT COUNT(u) FROM Utilisateur  u", Long.class)
-//                        .getSingleResult();
-//
-//        System.out.println("Il y a "+nbUtilisateur+" qui sont entrain de commander !");
-//
-//        // Requête 2
-//        List<Long> nbCommandes =
-//                session.createQuery("SELECT COUNT(u) FROM Commande c " +
-//                        "INNER JOIN c.utilisateur u " +
-//                        "GROUP BY u.id", Long.class ).getResultList();
-//
-//        System.out.println("Il y a actuellement "+nbCommandes.size()+"commandes en cours");
-//
-//        // Requête 3
-//        List<Object[]> moyenneParCategorie =
-//                (List<Object[]>) session.createQuery("SELECT c.libelle, AVG(p.prix) FROM Produit p " +
-//                        "INNER JOIN p.categorie c GROUP BY c.id").getResultList();
-//
-//        for (Object[] categMoyenne: moyenneParCategorie){
-//            System.out.println("Catégorie : " + categMoyenne[0]);
-//            System.out.println("Moyenne des prix : " + categMoyenne[1]);
-//            System.out.println("___");
-//        }
-//
-//        // Requête 4
-//        String baconResearch = "%bacon%";
-//
-//        List<Produit> produits = session.createQuery(
-//                        "FROM Produit p WHERE p.description LIKE (:param)", Produit.class)
-//                .setParameter("param", baconResearch).getResultList();
-//
-//        for (Produit produit: produits){
-//            System.out.println(produit.getDescription());
-//        }
-//
-//        // Requête 5
-//
-//        GregorianCalendar gc = new GregorianCalendar();
-//        gc.add(Calendar.YEAR, -18);
-//
-//
-//        Double moyenneMineur = session.createQuery(
-//                "SELECT AVG(p.prix) FROM Commande c " +
-//                        "LEFT JOIN c.utilisateur u " +
-//                        "LEFT JOIN c.produit p WHERE u.dateNaissance > :dateMineur"
-//                , Double.class
-//        ).setParameter("dateMineur", gc).getSingleResult();
-//
-//        System.out.println("Moyenne des commandes d'un mineur : " + moyenneMineur);
-//
-//
-//        // Requête 6 :
-//
-//        Double moyenneMajeur = session.createQuery(
-//                "SELECT AVG(p.prix) FROM Commande c " +
-//                        "LEFT JOIN c.utilisateur u " +
-//                        "LEFT JOIN c.produit p WHERE u.dateNaissance <= :dateMineur"
-//                , Double.class
-//        ).setParameter("dateMineur", gc).getSingleResult();
-//
-//        System.out.println("Moyenne des commandes d'un majeur : " + moyenneMajeur);
-//
-//
-//        // Requête 7
-//
-//        Double moyen = session.createQuery(
-//                "SELECT AVG(p.prix) FROM Commande c " +
-//                        "LEFT JOIN c.utilisateur u " +
-//                        "LEFT JOIN c.produit p"
-//                , Double.class
-//        ).getSingleResult();
-//
-//        System.out.println("Moyenne des commandes : " + moyen);
-
+        if (!utilisateursASupprimer.isEmpty()) {
+            int deletedCount = session.createQuery("DELETE FROM Utilisateur u WHERE u IN :utilisateurs")
+                    .setParameterList("utilisateurs", utilisateursASupprimer)
+                    .executeUpdate();
+            System.out.println("------------------------------------");
+            System.out.println("Nombre de utilisateurs supprimés : " + deletedCount);
+            System.out.println("------------------------------------");
+        }
 
         tx.commit();
-
-
         sf.close();
     }
 }

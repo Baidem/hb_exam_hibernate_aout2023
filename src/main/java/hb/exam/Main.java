@@ -255,6 +255,11 @@ public class Main {
         commande4.setUtilisateur(koopa);
         errorsCommande.addAll(validator.validate(commande4));
 
+        Commande commande5 = new Commande();
+        commande5.setDateCommande(new GregorianCalendar(2015, Calendar.APRIL,22));
+        commande5.setUtilisateur(koopa);
+        errorsCommande.addAll(validator.validate(commande5));
+
 
         if(errorsCategorie.isEmpty()){
             session = sf.getCurrentSession();
@@ -264,6 +269,7 @@ public class Main {
             session.persist(commande2);
             session.persist(commande3);
             session.persist(commande4);
+            session.persist(commande5);
 
             tx.commit();
             System.out.println("Données des commandes mis à jour.");
@@ -311,6 +317,12 @@ public class Main {
         detailsCommande4_2.setProduit(oneUpMushroom);
         errorsDetailsCommande.addAll(validator.validate(detailsCommande4_2));
 
+        DetailsCommande detailsCommande5 = new DetailsCommande();
+        detailsCommande5.setQuantite(1);
+        detailsCommande5.setCommande(commande5);
+        detailsCommande5.setProduit(capeFeather);
+        errorsDetailsCommande.addAll(validator.validate(detailsCommande5));
+
 
         if(errorsCategorie.isEmpty()){
             session = sf.getCurrentSession();
@@ -322,6 +334,7 @@ public class Main {
             session.persist(detailsCommande3);
             session.persist(detailsCommande4);
             session.persist(detailsCommande4_2);
+            session.persist(detailsCommande5);
 
             tx.commit();
             System.out.println("Données des details_commande mis à jour.");
@@ -361,7 +374,8 @@ public class Main {
         } while (!isSave);
 
 
-
+        tx.commit();
+        session.close();
         sf.close();
     }
 

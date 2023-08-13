@@ -3,6 +3,7 @@ package hb.exam.model;
 import jakarta.validation.constraints.NotNull;
 
 import javax.persistence.*;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -47,4 +48,20 @@ public class Commande {
     public void setDateCommande(Calendar dateCommande) {
         this.dateCommande = dateCommande;
     }
+
+    @Override
+    public String toString() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String formattedDate = dateFormat.format(dateCommande.getTime());
+        return "Commande{" +
+                "id = " + id +
+                ", dateCommande = " + formattedDate +
+                ", utilisateurId = " + utilisateur.getId() +
+                '}';
+    }
+
+    public long getId() {
+        return id;
+    }
 }
+
