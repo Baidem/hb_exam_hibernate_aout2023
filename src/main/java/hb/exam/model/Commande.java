@@ -19,7 +19,7 @@ public class Commande {
     @Temporal(TemporalType.DATE)
     private Calendar dateCommande;
 
-    @OneToMany(mappedBy = "commande", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "commande")
     private List<DetailsCommande> detailsCommandes;
 
     public Commande() {

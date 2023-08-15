@@ -27,7 +27,7 @@ public class Utilisateur {
             message = "Le mot de passe doit avoir 8 caractères, au moins une lettre et un chiffre")
     private String motDePasse;
 
-    @OneToMany(mappedBy = "utilisateur", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "utilisateur")
     private List<Commande> commandes;
 
     public Utilisateur() {
@@ -44,7 +44,7 @@ public class Utilisateur {
         return this.commandes;
     }
 
-    @OneToMany(mappedBy = "utilisateur", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "utilisateur")
     private List<Commentaire> commentaires;
 
     public void addCommentaire(Commentaire commentaire){

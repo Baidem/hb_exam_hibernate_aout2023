@@ -17,6 +17,7 @@ import java.util.Set;
 
 public class Main {
     public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
         SessionFactory sf = new HibernateUtil().buildSessionFactory();
         ValidatorFactory vf = Validation.buildDefaultValidatorFactory();
         Validator validator = vf.getValidator();
@@ -199,31 +200,129 @@ public class Main {
         }
 
         // Ajouter données commentaires
-        Commentaire commentaire1 = new Commentaire();
-        commentaire1.setCommentaire("Super !");
-        commentaire1.setUtilisateur(mario);
-        commentaire1.setProduit(superMushroom);
-        Set<ConstraintViolation<Commentaire>> errorsCommentaire = validator.validate(commentaire1);
+        Commentaire superMushroom1 = new Commentaire();
+        superMushroom1.setCommentaire("Le Super Mushroom m'a sauvé la vie plus d'une fois !" );
+        superMushroom1.setUtilisateur(toad);
+        superMushroom1.setProduit(superMushroom);
+        Set<ConstraintViolation<Commentaire>> errorsCommentaire = validator.validate(superMushroom1);
 
-        Commentaire commentaire2 = new Commentaire();
-        commentaire2.setCommentaire("Let's go !");
-        commentaire2.setUtilisateur(mario);
-        commentaire2.setProduit(superMushroom);
-        errorsCommentaire.addAll(validator.validate(commentaire2));
+        Commentaire superMushroom2 = new Commentaire();
+        superMushroom2.setCommentaire("Je me sens super puissant quand je deviens plus grand avec le Super Mushroom.");
+        superMushroom2.setUtilisateur(mario);
+        superMushroom2.setProduit(superMushroom);
+        errorsCommentaire.addAll(validator.validate(superMushroom2));
 
-        Commentaire commentaire3 = new Commentaire();
-        commentaire3.setCommentaire("Mario ?!");
-        commentaire3.setUtilisateur(luigi);
-        commentaire3.setProduit(fireFlower);
-        errorsCommentaire.addAll(validator.validate(commentaire3));
+        Commentaire superMushroom3 = new Commentaire();
+        superMushroom3.setCommentaire("C'est cool, mais je préfère quand même les fleurs de feu.");
+        superMushroom3.setUtilisateur(luigi);
+        superMushroom3.setProduit(superMushroom);
+        errorsCommentaire.addAll(validator.validate(superMushroom3));
+
+        Commentaire superMushroom4 = new Commentaire();
+        superMushroom4.setCommentaire("J'aimerais bien essayer le Super Mushroom.");
+        superMushroom4.setUtilisateur(koopa);
+        superMushroom4.setProduit(superMushroom);
+        errorsCommentaire.addAll(validator.validate(superMushroom4));
+
+        Commentaire superMushroom5 = new Commentaire();
+        superMushroom5.setCommentaire("Le Super Mushroom est un incontournable pour surmonter les obstacles difficiles !");
+        superMushroom5.setUtilisateur(mario);
+        superMushroom5.setProduit(superMushroom);
+        errorsCommentaire.addAll(validator.validate(superMushroom5));
+
+        Commentaire superMushroom6 = new Commentaire();
+        superMushroom6.setCommentaire("J'ai grandi en utilisant le Super Mushroom. Ça me rappelle de bons souvenirs.");
+        superMushroom6.setUtilisateur(luigi);
+        superMushroom6.setProduit(superMushroom);
+        errorsCommentaire.addAll(validator.validate(superMushroom6));
+
+        Commentaire fireFlower1 = new Commentaire();
+        fireFlower1.setCommentaire("Avec la Fire Flower, je me sens tellement puissant en lançant des boules de feu sur les ennemis. C'est génial pour nettoyer le chemin !");
+        fireFlower1.setUtilisateur(mario);
+        fireFlower1.setProduit(fireFlower);
+        errorsCommentaire.addAll(validator.validate(fireFlower1));
+
+        Commentaire fireFlower2 = new Commentaire();
+        fireFlower2.setCommentaire("La Fire Flower est mon arme préférée pour affronter les ennemis. Qui a besoin d'épées quand on peut lancer des boules de feu ?");
+        fireFlower2.setUtilisateur(koopa);
+        fireFlower2.setProduit(fireFlower);
+        errorsCommentaire.addAll(validator.validate(fireFlower2));
+
+        Commentaire fireFlower3 = new Commentaire();
+        fireFlower3.setCommentaire("Voir les ennemis brûler sous mes boules de feu est tellement satisfaisant.");
+        fireFlower3.setUtilisateur(koopa);
+        fireFlower3.setProduit(fireFlower);
+        errorsCommentaire.addAll(validator.validate(fireFlower3));
+
+        Commentaire fireFlower4 = new Commentaire();
+        fireFlower4.setCommentaire("Les fleurs de feu sont mon moyen préféré pour mettre un peu de piquant dans le jeu.");
+        fireFlower4.setUtilisateur(luigi);
+        fireFlower4.setProduit(fireFlower);
+        errorsCommentaire.addAll(validator.validate(fireFlower4));
+
+        Commentaire superStar1 = new Commentaire();
+        superStar1.setCommentaire("Rien ne peut me toucher quand je suis sous l'effet de la Super Star ! Woo-hoo !");
+        superStar1.setUtilisateur(mario);
+        superStar1.setProduit(superStar);
+        errorsCommentaire.addAll(validator.validate(superStar1));
+
+        Commentaire superStar2 = new Commentaire();
+        superStar2.setCommentaire("Je saute partout quand je suis sous l'effet de la Super Star. C'est comme si j'étais sur un nuage.");
+        superStar2.setUtilisateur(toad);
+        superStar2.setProduit(superStar);
+        errorsCommentaire.addAll(validator.validate(superStar2));
+
+        Commentaire oneUpMushroom1 = new Commentaire();
+        oneUpMushroom1.setCommentaire("Ces 1-Up Mushrooms sont comme des trésors cachés. Je ne les laisse jamais passer !");
+        oneUpMushroom1.setUtilisateur(mario);
+        oneUpMushroom1.setProduit(oneUpMushroom);
+        errorsCommentaire.addAll(validator.validate(oneUpMushroom1));
+
+        Commentaire oneUpMushroom2 = new Commentaire();
+        oneUpMushroom2.setCommentaire("Ces 1-Up Mushrooms sont comme des trésors cachés. Je ne les laisse jamais passer !");
+        oneUpMushroom2.setUtilisateur(mario);
+        oneUpMushroom2.setProduit(oneUpMushroom);
+        errorsCommentaire.addAll(validator.validate(oneUpMushroom2));
+
+        Commentaire oneUpMushroom3 = new Commentaire();
+        oneUpMushroom3.setCommentaire("Une vie supplémentaire, c'est toujours bon à prendre.");
+        oneUpMushroom3.setUtilisateur(luigi);
+        oneUpMushroom3.setProduit(oneUpMushroom);
+        errorsCommentaire.addAll(validator.validate(oneUpMushroom3));
+
+        Commentaire capeFeather1 = new Commentaire();
+        capeFeather1.setCommentaire("Voler dans les airs avec la Cape Feather est l'un de mes passe-temps préférés.");
+        capeFeather1.setUtilisateur(toad);
+        capeFeather1.setProduit(capeFeather);
+        errorsCommentaire.addAll(validator.validate(capeFeather1));
+
+        Commentaire cfrogSuit1 = new Commentaire();
+        cfrogSuit1.setCommentaire("Le Frog Suit est parfait pour les niveaux d'eau. Je me sens comme un vrai nageur.");
+        cfrogSuit1.setUtilisateur(luigi);
+        cfrogSuit1.setProduit(frogSuit);
+        errorsCommentaire.addAll(validator.validate(cfrogSuit1));
 
         if(errorsCategorie.isEmpty()){
             session = sf.getCurrentSession();
             tx = session.beginTransaction();
 
-            session.persist(commentaire1);
-            session.persist(commentaire2);
-            session.persist(commentaire3);
+            session.persist(superMushroom1);
+            session.persist(superMushroom2);
+            session.persist(superMushroom3);
+            session.persist(superMushroom4);
+            session.persist(superMushroom5);
+            session.persist(superMushroom6);
+            session.persist(fireFlower1);
+            session.persist(fireFlower2);
+            session.persist(fireFlower3);
+            session.persist(fireFlower4);
+            session.persist(superStar1);
+            session.persist(superStar2);
+            session.persist(oneUpMushroom1);
+            session.persist(oneUpMushroom2);
+            session.persist(oneUpMushroom3);
+            session.persist(capeFeather1);
+            session.persist(cfrogSuit1);
 
             tx.commit();
             System.out.println("Données des commentaires mis à jour.");
@@ -346,12 +445,12 @@ public class Main {
         }
 
         // Enregistrer un utilisateur en utilisant la saisies console
-        boolean isSave = false;
         Utilisateur u = new Utilisateur();
+        boolean isSave = false;
         do {
-        u.setNom(saisieTexteConsole("Saisir le nom de l'utilisateur : "));
-        u.setEmail(saisieTexteConsole("Saisir l'email de l'utilisateur : "));
-        u.setMotDePasse(saisieTexteConsole("Saisir le mot de passe de l'utilisateur : "));
+        u.setNom(saisieTexteConsole("Saisir le nom de l'utilisateur : ", scanner));
+        u.setEmail(saisieTexteConsole("Saisir l'email de l'utilisateur : ", scanner));
+        u.setMotDePasse(saisieTexteConsole("Saisir le mot de passe de l'utilisateur : ", scanner));
         Set<ConstraintViolation<Utilisateur>> errorsU = validator.validate(u);
 
         if(errorsU.isEmpty()){
@@ -373,25 +472,15 @@ public class Main {
 
         } while (!isSave);
 
-
-        tx.commit();
-        session.close();
+        scanner.close();
         sf.close();
     }
 
-    public static String saisieTexteConsole(String libelle){
-        Scanner scanner = new Scanner(System.in);
-        String st = new String();
-        boolean is = false;
-        do {
-            try {
-                System.out.println(libelle);
-                 st = scanner.nextLine();
-                is = false;
-            } catch (Exception e){
-                e.printStackTrace();
-            }
-        } while (is);
+    public static String saisieTexteConsole(String libelle, Scanner scanner){
+
+        System.out.println(libelle);
+        String st = scanner.nextLine();
+
         return st;
     }
 }
