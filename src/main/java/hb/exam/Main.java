@@ -2,6 +2,7 @@ package hb.exam;
 
 import hb.exam.model.*;
 import hb.exam.utils.HibernateUtil;
+import hb.exam.utils.SysOut;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;
@@ -71,9 +72,9 @@ public class Main {
             session.persist(koopa);
 
             tx.commit();
-            System.out.println("Données utilisateurs mis à jour.");
+            SysOut.printTitle("Données utilisateurs mis à jour.");
         } else {
-            System.out.println("Les données des utilisateurs ne sont pas valident.");
+            SysOut.printTitle("Les données des utilisateurs ne sont pas valident.");
             for (ConstraintViolation<Utilisateur> error:errorsUtilisateur){
                 System.out.println(error.getMessage());
             }
@@ -96,9 +97,9 @@ public class Main {
             session.persist(costume);
 
             tx.commit();
-            System.out.println("Données des categories mis à jour.");
+            SysOut.printTitle("Données des categories mis à jour.");
         } else {
-            System.out.println("Les données des categories ne sont pas valident.");
+            SysOut.printTitle("Les données des categories ne sont pas valident.");
             for (ConstraintViolation<Categorie> error:errorsCategorie){
                 System.out.println(error.getMessage());
             }
@@ -108,70 +109,70 @@ public class Main {
         Produit superMushroom = new Produit();
         superMushroom.setNom("Super Mushroom");
         superMushroom.setDescription("Permet de grandir et de résister à un coup ennemi supplémentaire.");
-        superMushroom.setPrix(10.00);
+        superMushroom.setPrix(10.50);
         superMushroom.setCategorie(powerup);
         Set<ConstraintViolation<Produit>> errorsProduit = validator.validate(superMushroom);
 
         Produit fireFlower = new Produit();
         fireFlower.setNom("Fire Flower");
         fireFlower.setDescription("Permet de lancer des boules de feu pour attaquer les ennemis.");
-        fireFlower.setPrix(15.00);
+        fireFlower.setPrix(15.40);
         fireFlower.setCategorie(costume);
         errorsProduit.addAll(validator.validate(fireFlower));
 
         Produit superStar = new Produit();
         superStar.setNom("Super Star");
         superStar.setDescription("Rend invincible pendant une courte période.");
-        superStar.setPrix(20.00);
+        superStar.setPrix(20.30);
         superStar.setCategorie(powerup);
         errorsProduit.addAll(validator.validate(superStar));
 
         Produit oneUpMushroom = new Produit();
         oneUpMushroom.setNom("1-Up Mushroom");
         oneUpMushroom.setDescription("Accorde une vie supplémentaire.");
-        oneUpMushroom.setPrix(30.00);
+        oneUpMushroom.setPrix(30.80);
         oneUpMushroom.setCategorie(powerup);
         errorsProduit.addAll(validator.validate(oneUpMushroom));
 
         Produit superLeaf = new Produit();
         superLeaf.setNom("Super Leaf");
         superLeaf.setDescription("Transforme en Tanooki, permet de voler brièvement en agitant sa queue.");
-        superLeaf.setPrix(25.00);
+        superLeaf.setPrix(25.10);
         superLeaf.setCategorie(powerup);
         errorsProduit.addAll(validator.validate(superLeaf));
 
         Produit capeFeather = new Produit();
         capeFeather.setNom("Cape Feather");
         capeFeather.setDescription("La cape permet de voler et d'effectuer des attaques aériennes puissantes.");
-        capeFeather.setPrix(35.00);
+        capeFeather.setPrix(35.30);
         capeFeather.setCategorie(powerup);
         errorsProduit.addAll(validator.validate(capeFeather));
 
         Produit superBell = new Produit();
         superBell.setNom("Super Bell");
         superBell.setDescription("Transforme en Cat, permet de grimper sur les murs et d'effectuer des attaques griffes.");
-        superBell.setPrix(30.00);
+        superBell.setPrix(30.90);
         superBell.setCategorie(powerup);
         errorsProduit.addAll(validator.validate(superBell));
 
         Produit frogSuit = new Produit();
         frogSuit.setNom("Frog Suit");
         frogSuit.setDescription("Transforme en Frog, permet de nager plus efficacement et de sauter plus haut hors de l'eau.");
-        frogSuit.setPrix(40.00);
+        frogSuit.setPrix(40.20);
         frogSuit.setCategorie(costume);
         errorsProduit.addAll(validator.validate(frogSuit));
 
         Produit hammerSuit = new Produit();
         hammerSuit.setNom("Hammer Suit");
         hammerSuit.setDescription("Transforme en Hammer, permet de lancer des marteaux sur les ennemis.");
-        hammerSuit.setPrix(45.00);
+        hammerSuit.setPrix(45.10);
         hammerSuit.setCategorie(costume);
         errorsProduit.addAll(validator.validate(hammerSuit));
 
         Produit penguinSuit = new Produit();
         penguinSuit.setNom("Penguin Suit");
         penguinSuit.setDescription("Transforme en Penguin, permet de glisser sur la glace et de lancer des boules de neige.");
-        penguinSuit.setPrix(40.00);
+        penguinSuit.setPrix(40.40);
         penguinSuit.setCategorie(costume);
         errorsProduit.addAll(validator.validate(penguinSuit));
 
@@ -191,9 +192,9 @@ public class Main {
             session.persist(penguinSuit);
 
             tx.commit();
-            System.out.println("Données des produits mis à jour.");
+            SysOut.printTitle("Données des produits mis à jour.");
         } else {
-            System.out.println("Les données des produits ne sont pas valident.");
+            SysOut.printTitle("Les données des produits ne sont pas valident.");
             for (ConstraintViolation<Produit> error:errorsProduit){
                 System.out.println(error.getMessage());
             }
@@ -325,9 +326,9 @@ public class Main {
             session.persist(cfrogSuit1);
 
             tx.commit();
-            System.out.println("Données des commentaires mis à jour.");
+            SysOut.printTitle("Données des commentaires mis à jour.");
         } else {
-            System.out.println("Les données des commentaires ne sont pas valident.");
+            SysOut.printTitle("Les données des commentaires ne sont pas valident.");
             for (ConstraintViolation<Commentaire> error:errorsCommentaire){
                 System.out.println(error.getMessage());
             }
@@ -371,9 +372,9 @@ public class Main {
             session.persist(commande5);
 
             tx.commit();
-            System.out.println("Données des commandes mis à jour.");
+            SysOut.printTitle("Données des commandes mis à jour.");
         } else {
-            System.out.println("Les données des commendes ne sont pas valident.");
+            SysOut.printTitle("Les données des commendes ne sont pas valident.");
             for (ConstraintViolation<Commande> error:errorsCommande){
                 System.out.println(error.getMessage());
             }
@@ -436,9 +437,9 @@ public class Main {
             session.persist(detailsCommande5);
 
             tx.commit();
-            System.out.println("Données des details_commande mis à jour.");
+            SysOut.printTitle("Données des details_commande mis à jour.");
         } else {
-            System.out.println("Les données des details_commande ne sont pas valident.");
+            SysOut.printTitle("Les données des details_commande ne sont pas valident.");
             for (ConstraintViolation<DetailsCommande> error:errorsDetailsCommande){
                 System.out.println(error.getMessage());
             }
@@ -448,9 +449,9 @@ public class Main {
         Utilisateur u = new Utilisateur();
         boolean isSave = false;
         do {
-        u.setNom(saisieTexteConsole("Saisir le nom de l'utilisateur : ", scanner));
-        u.setEmail(saisieTexteConsole("Saisir l'email de l'utilisateur : ", scanner));
-        u.setMotDePasse(saisieTexteConsole("Saisir le mot de passe de l'utilisateur : ", scanner));
+        u.setNom(SysOut.saisieTexteConsole("Saisir le nom de l'utilisateur : ", scanner));
+        u.setEmail(SysOut.saisieTexteConsole("Saisir l'email de l'utilisateur : ", scanner));
+        u.setMotDePasse(SysOut.saisieTexteConsole("Saisir le mot de passe de l'utilisateur : ", scanner));
         Set<ConstraintViolation<Utilisateur>> errorsU = validator.validate(u);
 
         if(errorsU.isEmpty()){
@@ -462,9 +463,9 @@ public class Main {
 
             tx.commit();
             isSave = true;
-            System.out.println("L'utilisateur a été enregistré.");
+            SysOut.printTitle("L'utilisateur a été enregistré.");
         } else {
-            System.out.println("Les données des utilisateurs ne sont pas valident.");
+            SysOut.printTitle("Les données des utilisateurs ne sont pas valident.");
             for (ConstraintViolation<Utilisateur> error:errorsU){
                 System.out.println(error.getMessage());
             }
@@ -476,11 +477,5 @@ public class Main {
         sf.close();
     }
 
-    public static String saisieTexteConsole(String libelle, Scanner scanner){
 
-        System.out.println(libelle);
-        String st = scanner.nextLine();
-
-        return st;
-    }
 }

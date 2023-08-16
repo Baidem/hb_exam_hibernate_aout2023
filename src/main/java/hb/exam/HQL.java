@@ -5,6 +5,7 @@ import hb.exam.model.Commentaire;
 import hb.exam.model.DetailsCommande;
 import hb.exam.model.Utilisateur;
 import hb.exam.utils.HibernateUtil;
+import hb.exam.utils.SysOut;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -18,6 +19,7 @@ public class HQL {
         SessionFactory sf = new HibernateUtil().buildSessionFactory();
         Session session = sf.getCurrentSession();
         Transaction tx = session.beginTransaction();
+        String title;
 
         // Requête : le nom et le prénom de l’utilisateur qui a effectué le plus de commandes
         List<Object[]> req = session.createQuery(
@@ -28,9 +30,8 @@ public class HQL {
                         "ORDER BY COUNT(d) DESC"
         ).getResultList();
 
-        System.out.println("--------------------------------------------------------------------------");
-        System.out.println("Le nom de l'utilisateur qui a fait le plus de commande est : " + req.get(0)[0]);
-        System.out.println("--------------------------------------------------------------------------");
+        title = "Le nom de l'utilisateur qui a fait le plus de commande est : " + req.get(0)[0];
+        SysOut.printTitle(title);
 
         // Requête : le nombre de produits par catégories
         List<Object[]> req2 = session.createQuery(
@@ -40,29 +41,29 @@ public class HQL {
                         "GROUP BY c.nom"
         ).getResultList();
 
-        System.out.println("-----------------------------------");
-        System.out.println("Nombre de produits par catégories :");
-        System.out.println("-----------------------------------");
+        title = "Nombre de produits par catégories :";
+        SysOut.printTitle(title);
+
         for (Object[] c: req2){
             System.out.println(c[0] + " " + c[1]);
         }
-        System.out.println("-----------------------------------");
+        SysOut.printLine(title.length());
 
         // Requête : le nombre de commentaire par utilisateurs.
-        List<Object[]> req3 = session.createQuery(
+                List<Object[]> req3 = session.createQuery(
                 "SELECT u.nom, COUNT(c) " +
                         "FROM Utilisateur u " +
                         "LEFT JOIN u.commentaires c " +
                         "GROUP BY u.nom", Object[].class
         ).getResultList();
 
-        System.out.println("-----------------------------------------");
-        System.out.println("Le nombre de commentaire par utilisateurs");
-        System.out.println("-----------------------------------------");
+        title = "Le nombre de commentaire par utilisateurs";
+        SysOut.printTitle(title);
+
         for (Object[] o: req3){
             System.out.println(o[0] + " " +o[1]);
         }
-        System.out.println("-----------------------------------------");
+        SysOut.printLine(title.length());
 
         // Requête : le prix moyen des produits par catégories.
         List<Object[]> req4 = session.createQuery(
@@ -72,13 +73,13 @@ public class HQL {
                 , Object[].class
         ).getResultList();
 
-        System.out.println("-----------------------------------");
-        System.out.println("La moyenne des prix par catégories.");
-        System.out.println("-----------------------------------");
+        title = "La moyenne des prix par catégories.";
+        SysOut.printTitle(title);
+
         for (Object[] o: req4){
             System.out.println(o[0] + " " +o[1]);
         }
-        System.out.println("-----------------------------------");
+        SysOut.printLine(title.length());
 
         // Requête : supprimer les utilisateurs n’ayant pas réalisé de commandes depuis plus de 2 ans.
         GregorianCalendar gc = new GregorianCalendar();
@@ -91,82 +92,80 @@ public class HQL {
                         "AND c.dateCommande > :dateNowMoins2Ans)"
         ).setParameter("dateNowMoins2Ans", gc).getResultList();
 
-        System.out.println("------------------------------------");
-        System.out.println("Liste d'utilisateurs à supprimer." + utilisateursASupprimer.size());
-        System.out.println("------------------------------------");
+        title = "Liste d'utilisateurs à supprimer " + utilisateursASupprimer.size();
+        SysOut.printTitle(title);
+
         for (Utilisateur u: utilisateursASupprimer){
             System.out.println(u);
         }
-        System.out.println("------------------------------------");
+        SysOut.printLine(title.length());
 
         List<Commande> commandesASupprimer = session.createQuery(
                 "FROM Commande c WHERE c.utilisateur IN :utilisateurs"
         ).setParameterList("utilisateurs", utilisateursASupprimer).getResultList();
 
-        System.out.println("------------------------------------");
-        System.out.println("Liste des commandes à supprimer " + commandesASupprimer.size());
-        System.out.println("------------------------------------");
+        title = "Liste des commandes à supprimer " + commandesASupprimer.size();
+        SysOut.printTitle(title);
+
         for (Commande c: commandesASupprimer){
             System.out.println(c);
         }
-        System.out.println("------------------------------------");
+        SysOut.printLine(title.length());
 
         List<DetailsCommande> detailsCommandesASupprimer = session.createQuery(
                 "FROM DetailsCommande d WHERE d.commande IN :commandes"
         ).setParameterList("commandes", commandesASupprimer).getResultList();
-        System.out.println("--------------------------------------------");
-        System.out.println("Liste des détails commandes à supprimer " + detailsCommandesASupprimer.size());
-        System.out.println("--------------------------------------------");
+
+        title = "Liste des détails commandes à supprimer " + detailsCommandesASupprimer.size();
+        SysOut.printTitle(title);
+
         for (DetailsCommande d : detailsCommandesASupprimer){
             System.out.println(d);
         }
-        System.out.println("--------------------------------------------");
+        SysOut.printLine(title.length());
 
         List<Commentaire> commentairesASupprimer = session.createQuery(
                 "FROM Commentaire c WHERE c.utilisateur IN :utilisateurs"
         ).setParameterList("utilisateurs", utilisateursASupprimer).getResultList();
-        System.out.println("---------------------------------------");
-        System.out.println("Liste des commentaires à supprimer " + commentairesASupprimer.size());
-        System.out.println("---------------------------------------");
+
+        title = "Liste des commentaires à supprimer " + commentairesASupprimer.size();
+        SysOut.printTitle(title);
+
         for (Commentaire c: commentairesASupprimer){
             System.out.println(c);
         }
-        System.out.println("---------------------------------------");
+        SysOut.printLine(title.length());
 
         if (!detailsCommandesASupprimer.isEmpty()) {
             int deletedCount = session.createQuery("DELETE FROM DetailsCommande d WHERE d IN :details")
                     .setParameterList("details", detailsCommandesASupprimer)
                     .executeUpdate();
-            System.out.println("--------------------------------------------");
-            System.out.println("Nombre de détails commandes supprimés : " + deletedCount);
-            System.out.println("--------------------------------------------");
+
+            SysOut.printTitle("Nombre de détails commandes supprimés : " + deletedCount);
         }
 
         if (!commentairesASupprimer.isEmpty()) {
             int deletedCount = session.createQuery("DELETE FROM Commentaire c WHERE c IN :commentaires")
                     .setParameterList("commentaires", commentairesASupprimer)
                     .executeUpdate();
-            System.out.println("----------------------------------------");
-            System.out.println("Nombre de commmentaires supprimés : " + deletedCount);
-            System.out.println("----------------------------------------");
+
+            SysOut.printTitle("Nombre de commmentaires supprimés : " + deletedCount);
         }
 
         if (!commandesASupprimer.isEmpty()) {
             int deletedCount = session.createQuery("DELETE FROM Commande c WHERE c IN :commandes")
                     .setParameterList("commandes", commandesASupprimer)
                     .executeUpdate();
-            System.out.println("------------------------------------");
-            System.out.println("Nombre de commandes supprimés : " + deletedCount);
-            System.out.println("------------------------------------");
+
+            SysOut.printTitle("Nombre de commandes supprimés : " + deletedCount);
         }
 
         if (!utilisateursASupprimer.isEmpty()) {
             int deletedCount = session.createQuery("DELETE FROM Utilisateur u WHERE u IN :utilisateurs")
                     .setParameterList("utilisateurs", utilisateursASupprimer)
                     .executeUpdate();
-            System.out.println("---------------------------------------");
-            System.out.println("Nombre de utilisateurs supprimés : " + deletedCount);
-            System.out.println("---------------------------------------");
+
+            SysOut.printTitle("Nombre de utilisateurs supprimés : " + deletedCount);
         }
 
         tx.commit();
